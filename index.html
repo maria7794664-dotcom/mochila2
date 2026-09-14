@@ -1,0 +1,2298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Minha Mochila Escolar</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+    --creme: #fefbe8;
+    --creme-claro: #fffdf2;
+    --creme-escuro: #eee4cc;
+    --marrom: #4a3729;
+    --marrom-medio: #705748;
+    --marrom-claro: #9a8175;
+    --rosa-marrom: #8a7168;
+    --bege: #d8c9b8;
+    --sombra: rgba(74, 55, 41, 0.18);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Cormorant Garamond', serif;
+    background-color: var(--creme);
+    color: var(--marrom);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ESTRELAS DO FUNDO */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.17;
+
+    background-image:
+        radial-gradient(circle at 10px 10px, var(--rosa-marrom) 2px, transparent 3px);
+
+    background-size: 85px 85px;
+}
+
+/* BORDA LATERAL DECORATIVA */
+
+body::after {
+    content: "";
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 70px;
+    height: 100vh;
+    pointer-events: none;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 9px,
+            rgba(138,113,104,0.18) 10px,
+            transparent 11px
+        );
+
+    border-right: 4px double var(--bege);
+    opacity: 0.8;
+}
+
+/* CONTAINER */
+
+.container {
+    width: min(1200px, calc(100% - 110px));
+    margin: auto;
+    padding: 25px 0 50px;
+}
+
+/* CABEÇALHO */
+
+header {
+    background: var(--creme-claro);
+    border: 2px solid var(--bege);
+    border-radius: 18px;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 8px 20px var(--sombra);
+    position: relative;
+    overflow: hidden;
+}
+
+header::before,
+header::after {
+    content: "★";
+    position: absolute;
+    font-size: 38px;
+    color: var(--rosa-marrom);
+    opacity: 0.65;
+}
+
+header::before {
+    left: 30px;
+    top: 18px;
+}
+
+header::after {
+    right: 30px;
+    bottom: 15px;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 5vw, 52px);
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 20px;
+    margin-top: 5px;
+    font-style: italic;
+    color: var(--marrom-medio);
+}
+
+.decorative-line {
+    margin: 16px auto 0;
+    max-width: 550px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.decorative-line::before,
+.decorative-line::after {
+    content: "";
+    height: 1px;
+    background: var(--bege);
+    flex: 1;
+}
+
+.decorative-line span {
+    font-size: 20px;
+}
+
+/* MENU */
+
+nav {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.nav-btn {
+    border: 1px solid var(--bege);
+    background: var(--creme-claro);
+    color: var(--marrom);
+    padding: 12px 22px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    background: var(--marrom);
+    color: var(--creme);
+    transform: translateY(-2px);
+}
+
+/* JANELAS */
+
+.page {
+    display: none;
+    animation: aparecer 0.3s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* TÍTULOS */
+
+.page-title {
+    text-align: center;
+    margin: 25px 0;
+}
+
+.page-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+}
+
+.page-title p {
+    font-size: 19px;
+    margin-top: 5px;
+}
+
+/* GAVETAS */
+
+.drawer {
+    background: var(--creme-claro);
+    border: 2px solid var(--bege);
+    border-radius: 16px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 13px var(--sombra);
+}
+
+.drawer-header {
+    width: 100%;
+    border: none;
+    background: var(--marrom);
+    color: var(--creme);
+    padding: 17px 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.drawer-header span:last-child {
+    transition: 0.3s;
+}
+
+.drawer.open .drawer-header span:last-child {
+    transform: rotate(180deg);
+}
+
+.drawer-content {
+    display: none;
+    padding: 18px;
+}
+
+.drawer.open .drawer-content {
+    display: block;
+}
+
+/* MATÉRIAS */
+
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 13px;
+}
+
+.subject {
+    background: #fffdf3;
+    border: 1px solid var(--bege);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.subject-title {
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 15px;
+    color: var(--marrom);
+    font-family: inherit;
+    font-size: 19px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+}
+
+.subject-title:hover {
+    background: #f4ead7;
+}
+
+.subject-body {
+    display: none;
+    border-top: 1px dashed var(--bege);
+    padding: 14px;
+}
+
+.subject.open .subject-body {
+    display: block;
+}
+
+/* ATIVIDADES */
+
+.activity {
+    background: #f7efdf;
+    border-left: 4px solid var(--rosa-marrom);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.activity strong {
+    font-size: 18px;
+}
+
+.activity small {
+    display: block;
+    margin: 4px 0;
+}
+
+.activity button {
+    margin-right: 5px;
+}
+
+.small-btn {
+    border: 1px solid var(--bege);
+    background: var(--creme-claro);
+    color: var(--marrom);
+    padding: 5px 9px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.small-btn:hover {
+    background: var(--marrom);
+    color: white;
+}
+
+/* BOTÕES */
+
+.primary-btn {
+    background: var(--marrom);
+    color: var(--creme);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.primary-btn:hover {
+    background: var(--marrom-medio);
+}
+
+.secondary-btn {
+    background: transparent;
+    border: 1px solid var(--marrom);
+    color: var(--marrom);
+    padding: 9px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* FORMULÁRIOS */
+
+.form-card {
+    background: var(--creme-claro);
+    border: 2px solid var(--bege);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 5px 15px var(--sombra);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid var(--bege);
+    border-radius: 8px;
+    background: #fffef7;
+    color: var(--marrom);
+    font-family: inherit;
+    font-size: 17px;
+    outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--marrom-medio);
+    box-shadow: 0 0 0 2px rgba(112,87,72,0.1);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* HORÁRIO */
+
+.schedule-wrapper {
+    overflow-x: auto;
+}
+
+.schedule {
+    width: 100%;
+    min-width: 750px;
+    border-collapse: collapse;
+    background: var(--creme-claro);
+}
+
+.schedule th,
+.schedule td {
+    border: 1px solid var(--bege);
+    padding: 10px;
+    text-align: center;
+}
+
+.schedule th {
+    background: var(--marrom);
+    color: var(--creme);
+    font-size: 18px;
+}
+
+.schedule td:first-child {
+    font-weight: bold;
+    background: #f0e5d2;
+    width: 100px;
+}
+
+.schedule input {
+    min-width: 110px;
+    border: none;
+    background: transparent;
+    text-align: center;
+}
+
+/* CALENDÁRIO */
+
+.calendar-card {
+    background: var(--creme-claro);
+    border: 2px solid var(--bege);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 5px 15px var(--sombra);
+}
+
+.calendar-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.calendar-top h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 27px;
+}
+
+.calendar-top button {
+    border: 1px solid var(--bege);
+    background: var(--creme);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    color: var(--marrom);
+    font-size: 18px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.weekday {
+    text-align: center;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.day {
+    min-height: 80px;
+    border: 1px solid var(--bege);
+    background: #fffdf3;
+    border-radius: 8px;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.day:hover {
+    background: #f5ead8;
+}
+
+.day-number {
+    font-weight: bold;
+}
+
+.day.today {
+    border: 2px solid var(--marrom);
+}
+
+.test-dot {
+    display: block;
+    background: var(--rosa-marrom);
+    color: white;
+    border-radius: 5px;
+    padding: 2px 4px;
+    margin-top: 5px;
+    font-size: 13px;
+    overflow: hidden;
+}
+
+/* LISTA DE PROVAS */
+
+.test-list {
+    margin-top: 20px;
+}
+
+.test-item {
+    background: #f7efdf;
+    border: 1px solid var(--bege);
+    border-radius: 10px;
+    padding: 13px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.test-info strong {
+    font-size: 20px;
+}
+
+.test-info span {
+    display: block;
+}
+
+/* ALUNO */
+
+.student-card {
+    max-width: 800px;
+    margin: auto;
+}
+
+.student-decoration {
+    text-align: center;
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+/* MODAL */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(74,55,41,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    width: min(600px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--creme);
+    border: 3px solid var(--bege);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.modal-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 27px;
+}
+
+.close {
+    border: none;
+    background: transparent;
+    font-size: 27px;
+    cursor: pointer;
+    color: var(--marrom);
+}
+
+.modal-actions {
+    margin-top: 18px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* RODAPÉ */
+
+footer {
+    text-align: center;
+    margin-top: 35px;
+    padding: 20px;
+    color: var(--marrom-medio);
+    font-size: 18px;
+}
+
+footer .stars {
+    font-size: 20px;
+    letter-spacing: 7px;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 700px) {
+
+    body::after {
+        width: 30px;
+    }
+
+    .container {
+        width: calc(100% - 50px);
+    }
+
+    header {
+        padding: 25px 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .calendar-grid {
+        gap: 2px;
+    }
+
+    .day {
+        min-height: 60px;
+        padding: 4px;
+    }
+
+    .test-dot {
+        font-size: 10px;
+    }
+
+    .nav-btn {
+        padding: 9px 13px;
+        font-size: 16px;
+    }
+
+    .test-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+    <div class="logo">✦ Minha Mochila Escolar ✦</div>
+
+    <div class="subtitle">
+        organização, estudos e sonhos
+    </div>
+
+    <div class="decorative-line">
+        <span>★</span>
+    </div>
+
+</header>
+
+<nav>
+
+    <button class="nav-btn active" onclick="showPage('mochila', this)">
+        🎒 Mochila
+    </button>
+
+    <button class="nav-btn" onclick="showPage('horario', this)">
+        🕘 Horário
+    </button>
+
+    <button class="nav-btn" onclick="showPage('provas', this)">
+        📅 Provas
+    </button>
+
+    <button class="nav-btn" onclick="showPage('aluno', this)">
+        👩‍🎓 Aluno
+    </button>
+
+</nav>
+
+
+<!-- =====================================================
+                     MOCHILA
+===================================================== -->
+
+<section id="mochila" class="page active">
+
+    <div class="page-title">
+
+        <h2>🎒 Minha Mochila</h2>
+
+        <p>
+            Todas as minhas matérias organizadas em pequenas gavetas.
+        </p>
+
+    </div>
+
+
+    <!-- HUMANAS -->
+
+    <div class="drawer">
+
+        <button class="drawer-header" onclick="toggleDrawer(this)">
+            <span>✦ Humanas</span>
+            <span>⌄</span>
+        </button>
+
+        <div class="drawer-content">
+
+            <div class="subject-grid">
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        História <span>+</span>
+                    </button>
+
+                    <div class="subject-body" data-subject="História"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Geografia <span>+</span>
+                    </button>
+
+                    <div class="subject-body" data-subject="Geografia"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Sociologia <span>+</span>
+                    </button>
+
+                    <div class="subject-body" data-subject="Sociologia"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Filosofia <span>+</span>
+                    </button>
+
+                    <div class="subject-body" data-subject="Filosofia"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXATAS -->
+
+    <div class="drawer">
+
+        <button class="drawer-header" onclick="toggleDrawer(this)">
+            <span>✦ Exatas</span>
+            <span>⌄</span>
+        </button>
+
+        <div class="drawer-content">
+
+            <div class="subject-grid">
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Matemática <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Matemática"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Física <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Física"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Química <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Química"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- LINGUAGENS -->
+
+    <div class="drawer">
+
+        <button class="drawer-header" onclick="toggleDrawer(this)">
+            <span>✦ Linguagens</span>
+            <span>⌄</span>
+        </button>
+
+        <div class="drawer-content">
+
+            <div class="subject-grid">
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Português <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Português"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Inglês <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Inglês"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Artes <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Artes"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Educação Física <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Educação Física"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ITINERÁRIOS -->
+
+    <div class="drawer">
+
+        <button class="drawer-header" onclick="toggleDrawer(this)">
+            <span>✦ Itinerários</span>
+            <span>⌄</span>
+        </button>
+
+        <div class="drawer-content">
+
+            <div class="subject-grid">
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Estudos Orientados <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Estudos Orientados"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Educação Financeira <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Educação Financeira"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Projeto de Vida <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Projeto de Vida"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Práticas Experimentais <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Práticas Experimentais"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TÉCNICO -->
+
+    <div class="drawer">
+
+        <button class="drawer-header" onclick="toggleDrawer(this)">
+            <span>✦ Técnico em Informática</span>
+            <span>⌄</span>
+        </button>
+
+        <div class="drawer-content">
+
+            <div class="subject-grid">
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Arquitetura e Manutenção de Computadores <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Arquitetura e Manutenção de Computadores"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        POO / Java <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="POO / Java"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Gestão de Tempo <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Gestão de Tempo"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Programação Web <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Programação Web"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Sistemas Operacionais <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Sistemas Operacionais"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Noções de Robótica <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Noções de Robótica"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        Linguagem de Programação <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="Linguagem de Programação"></div>
+                </div>
+
+                <div class="subject">
+                    <button class="subject-title" onclick="toggleSubject(this)">
+                        HTML <span>+</span>
+                    </button>
+                    <div class="subject-body" data-subject="HTML"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+                     HORÁRIO
+===================================================== -->
+
+<section id="horario" class="page">
+
+    <div class="page-title">
+
+        <h2>🕘 Meu Horário Escolar</h2>
+
+        <p>
+            Clique nas células para colocar ou alterar suas matérias.
+        </p>
+
+    </div>
+
+    <div class="form-card">
+
+        <div class="schedule-wrapper">
+
+            <table class="schedule">
+
+                <thead>
+
+                    <tr>
+                        <th>Período</th>
+                        <th>Segunda</th>
+                        <th>Terça</th>
+                        <th>Quarta</th>
+                        <th>Quinta</th>
+                        <th>Sexta</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="scheduleBody"></tbody>
+
+            </table>
+
+        </div>
+
+        <br>
+
+        <button class="primary-btn" onclick="saveSchedule()">
+            ✦ Salvar horário
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+                     PROVAS
+===================================================== -->
+
+<section id="provas" class="page">
+
+    <div class="page-title">
+
+        <h2>📅 Calendário de Provas</h2>
+
+        <p>
+            Organize suas provas e nunca perca uma data importante.
+        </p>
+
+    </div>
+
+
+    <div class="calendar-card">
+
+        <div class="calendar-top">
+
+            <button onclick="changeMonth(-1)">‹</button>
+
+            <h3 id="monthTitle"></h3>
+
+            <button onclick="changeMonth(1)">›</button>
+
+        </div>
+
+        <div class="calendar-grid" id="calendar"></div>
+
+    </div>
+
+
+    <br>
+
+
+    <div class="form-card">
+
+        <h3 style="font-family:'Playfair Display'; font-size:26px;">
+            ✦ Adicionar prova
+        </h3>
+
+        <br>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Matéria</label>
+
+                <input
+                    type="text"
+                    id="testSubject"
+                    placeholder="Ex.: Matemática"
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Data</label>
+
+                <input
+                    type="date"
+                    id="testDate"
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Horário</label>
+
+                <input
+                    type="time"
+                    id="testTime"
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Conteúdo</label>
+
+                <input
+                    type="text"
+                    id="testContent"
+                    placeholder="Ex.: Funções"
+                >
+            </div>
+
+            <div class="form-group full">
+
+                <label>Observações</label>
+
+                <textarea
+                    id="testNotes"
+                    placeholder="Anotações sobre a prova..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <button class="primary-btn" onclick="addTest()">
+            + Adicionar prova
+        </button>
+
+    </div>
+
+
+    <div class="test-list">
+
+        <h3 style="font-family:'Playfair Display'; font-size:27px;">
+            ✦ Próximas provas
+        </h3>
+
+        <br>
+
+        <div id="testsContainer"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+                     ALUNO
+===================================================== -->
+
+<section id="aluno" class="page">
+
+    <div class="page-title">
+
+        <h2>👩‍🎓 Informações do Aluno</h2>
+
+        <p>
+            Seus dados escolares ficam salvos neste dispositivo.
+        </p>
+
+    </div>
+
+
+    <div class="form-card student-card">
+
+        <div class="student-decoration">
+            ★ ✦ ★
+        </div>
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+
+                <label>Nome completo</label>
+
+                <input
+                    type="text"
+                    id="studentName"
+                    placeholder="Digite seu nome completo"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Data de nascimento</label>
+
+                <input
+                    type="date"
+                    id="studentBirth"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Número da matrícula</label>
+
+                <input
+                    type="text"
+                    id="studentRegistration"
+                    placeholder="Digite sua matrícula"
+                >
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>Escola</label>
+
+                <input
+                    type="text"
+                    id="studentSchool"
+                    placeholder="Nome da sua escola"
+                >
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <button class="primary-btn" onclick="saveStudent()">
+            ✦ Salvar informações
+        </button>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <div class="stars">★ ✦ ★ ✦ ★</div>
+
+    <p>
+        Minha Mochila Escolar • organizada com carinho
+    </p>
+
+</footer>
+
+</div>
+
+
+<!-- =====================================================
+                     MODAL ATIVIDADE
+===================================================== -->
+
+<div class="modal" id="activityModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h3 id="modalTitle">
+                Nova atividade
+            </h3>
+
+            <button class="close" onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+
+                <label>Atividade</label>
+
+                <input
+                    type="text"
+                    id="activityName"
+                    placeholder="Nome da atividade"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Data de entrega</label>
+
+                <input
+                    type="date"
+                    id="activityDate"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Status</label>
+
+                <select id="activityStatus">
+
+                    <option value="Pendente">
+                        Pendente
+                    </option>
+
+                    <option value="Em andamento">
+                        Em andamento
+                    </option>
+
+                    <option value="Concluída">
+                        Concluída
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>Descrição / anotações</label>
+
+                <textarea
+                    id="activityDescription"
+                    placeholder="Escreva detalhes da atividade..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="secondary-btn"
+                onclick="closeModal()"
+            >
+                Cancelar
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick="saveActivity()"
+            >
+                Salvar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+                 DADOS
+===================================================== */
+
+let activities =
+    JSON.parse(localStorage.getItem("mochilaActivities")) || [];
+
+let tests =
+    JSON.parse(localStorage.getItem("mochilaTests")) || [];
+
+let schedule =
+    JSON.parse(localStorage.getItem("mochilaSchedule")) || {};
+
+let student =
+    JSON.parse(localStorage.getItem("mochilaStudent")) || {};
+
+let editingActivityId = null;
+let currentSubject = null;
+
+
+/* =====================================================
+                 NAVEGAÇÃO
+===================================================== */
+
+function showPage(pageId, button) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    if (pageId === "provas") {
+        renderCalendar();
+        renderTests();
+    }
+}
+
+
+/* =====================================================
+                 GAVETAS
+===================================================== */
+
+function toggleDrawer(button) {
+
+    const drawer = button.parentElement;
+
+    drawer.classList.toggle("open");
+
+}
+
+
+/* =====================================================
+                 SUBGAVETAS
+===================================================== */
+
+function toggleSubject(button) {
+
+    const subject = button.parentElement;
+
+    subject.classList.toggle("open");
+
+    const body = subject.querySelector(".subject-body");
+
+    if (subject.classList.contains("open")) {
+
+        const subjectName = body.dataset.subject;
+
+        renderActivities(subjectName);
+
+    }
+
+}
+
+
+/* =====================================================
+             RENDERIZAR ATIVIDADES
+===================================================== */
+
+function renderActivities(subjectName) {
+
+    const bodies =
+        document.querySelectorAll(
+            `.subject-body[data-subject="${CSS.escape(subjectName)}"]`
+        );
+
+    bodies.forEach(body => {
+
+        const subjectActivities =
+            activities.filter(a => a.subject === subjectName);
+
+        let html = "";
+
+        if (subjectActivities.length === 0) {
+
+            html += `
+                <p style="margin-bottom:10px;">
+                    Nenhuma atividade adicionada ainda.
+                </p>
+            `;
+
+        } else {
+
+            subjectActivities.forEach(activity => {
+
+                html += `
+
+                <div class="activity">
+
+                    <strong>
+                        ${escapeHTML(activity.name)}
+                    </strong>
+
+                    <small>
+                        📅 Entrega:
+                        ${formatDate(activity.date)}
+                    </small>
+
+                    <small>
+                        ✦ Status:
+                        ${escapeHTML(activity.status)}
+                    </small>
+
+                    ${
+                        activity.description
+                        ?
+                        `<small>
+                            📝 ${escapeHTML(activity.description)}
+                        </small>`
+                        :
+                        ""
+                    }
+
+                    <br>
+
+                    <button
+                        class="small-btn"
+                        onclick="editActivity(${activity.id})"
+                    >
+                        ✏️ Editar
+                    </button>
+
+                    <button
+                        class="small-btn"
+                        onclick="deleteActivity(${activity.id})"
+                    >
+                        🗑️ Excluir
+                    </button>
+
+                </div>
+
+                `;
+
+            });
+
+        }
+
+
+        html += `
+
+            <button
+                class="primary-btn"
+                onclick="openActivityModal('${escapeAttribute(subjectName)}')"
+            >
+                + Nova atividade
+            </button>
+
+        `;
+
+        body.innerHTML = html;
+
+    });
+
+}
+
+
+/* =====================================================
+             MODAL ATIVIDADE
+===================================================== */
+
+function openActivityModal(subjectName, activity = null) {
+
+    currentSubject = subjectName;
+
+    editingActivityId = activity ? activity.id : null;
+
+    document.getElementById("modalTitle").textContent =
+        activity
+        ? "Editar atividade"
+        : "Nova atividade";
+
+
+    document.getElementById("activityName").value =
+        activity?.name || "";
+
+    document.getElementById("activityDate").value =
+        activity?.date || "";
+
+    document.getElementById("activityStatus").value =
+        activity?.status || "Pendente";
+
+    document.getElementById("activityDescription").value =
+        activity?.description || "";
+
+
+    document.getElementById("activityModal")
+        .classList.add("show");
+
+}
+
+
+function closeModal() {
+
+    document.getElementById("activityModal")
+        .classList.remove("show");
+
+    editingActivityId = null;
+    currentSubject = null;
+
+}
+
+
+/* =====================================================
+             SALVAR ATIVIDADE
+===================================================== */
+
+function saveActivity() {
+
+    const name =
+        document.getElementById("activityName").value.trim();
+
+    const date =
+        document.getElementById("activityDate").value;
+
+    const status =
+        document.getElementById("activityStatus").value;
+
+    const description =
+        document.getElementById("activityDescription").value.trim();
+
+
+    if (!name) {
+
+        alert("Digite o nome da atividade.");
+
+        return;
+
+    }
+
+
+    if (editingActivityId) {
+
+        const activity =
+            activities.find(
+                a => a.id === editingActivityId
+            );
+
+        activity.name = name;
+        activity.date = date;
+        activity.status = status;
+        activity.description = description;
+
+    } else {
+
+        activities.push({
+
+            id: Date.now(),
+
+            subject: currentSubject,
+
+            name: name,
+
+            date: date,
+
+            status: status,
+
+            description: description
+
+        });
+
+    }
+
+
+    localStorage.setItem(
+        "mochilaActivities",
+        JSON.stringify(activities)
+    );
+
+
+    closeModal();
+
+    renderActivities(currentSubject);
+
+}
+
+
+/* =====================================================
+                 EDITAR ATIVIDADE
+===================================================== */
+
+function editActivity(id) {
+
+    const activity =
+        activities.find(a => a.id === id);
+
+    if (!activity) return;
+
+    openActivityModal(
+        activity.subject,
+        activity
+    );
+
+}
+
+
+/* =====================================================
+                 EXCLUIR ATIVIDADE
+===================================================== */
+
+function deleteActivity(id) {
+
+    if (!confirm("Deseja excluir esta atividade?")) {
+        return;
+    }
+
+    const activity =
+        activities.find(a => a.id === id);
+
+    activities =
+        activities.filter(a => a.id !== id);
+
+    localStorage.setItem(
+        "mochilaActivities",
+        JSON.stringify(activities)
+    );
+
+    if (activity) {
+        renderActivities(activity.subject);
+    }
+
+}
+
+
+/* =====================================================
+                     HORÁRIO
+===================================================== */
+
+function createSchedule() {
+
+    const body =
+        document.getElementById("scheduleBody");
+
+    body.innerHTML = "";
+
+    const days = [
+        "segunda",
+        "terca",
+        "quarta",
+        "quinta",
+        "sexta"
+    ];
+
+    for (let period = 1; period <= 9; period++) {
+
+        const tr = document.createElement("tr");
+
+        let html = `
+            <td>${period}º período</td>
+        `;
+
+        days.forEach(day => {
+
+            const key = `${day}-${period}`;
+
+            html += `
+
+                <td>
+
+                    <input
+                        type="text"
+                        data-schedule="${key}"
+                        value="${escapeAttribute(schedule[key] || "")}"
+                        placeholder="Matéria"
+                    >
+
+                </td>
+
+            `;
+
+        });
+
+        tr.innerHTML = html;
+
+        body.appendChild(tr);
+
+    }
+
+}
+
+
+function saveSchedule() {
+
+    document
+        .querySelectorAll("[data-schedule]")
+        .forEach(input => {
+
+            schedule[input.dataset.schedule] =
+                input.value;
+
+        });
+
+
+    localStorage.setItem(
+        "mochilaSchedule",
+        JSON.stringify(schedule)
+    );
+
+
+    alert("Horário salvo com sucesso! ✦");
+
+}
+
+
+/* =====================================================
+                     CALENDÁRIO
+===================================================== */
+
+let calendarDate = new Date();
+
+
+function renderCalendar() {
+
+    const calendar =
+        document.getElementById("calendar");
+
+    const monthTitle =
+        document.getElementById("monthTitle");
+
+    const year =
+        calendarDate.getFullYear();
+
+    const month =
+        calendarDate.getMonth();
+
+
+    const monthNames = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ];
+
+
+    monthTitle.textContent =
+        `${monthNames[month]} de ${year}`;
+
+
+    calendar.innerHTML = "";
+
+
+    const weekdays = [
+        "Dom",
+        "Seg",
+        "Ter",
+        "Qua",
+        "Qui",
+        "Sex",
+        "Sáb"
+    ];
+
+
+    weekdays.forEach(day => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "weekday";
+
+        div.textContent = day;
+
+        calendar.appendChild(div);
+
+    });
+
+
+    const firstDay =
+        new Date(year, month, 1).getDay();
+
+    const daysInMonth =
+        new Date(year, month + 1, 0).getDate();
+
+
+    for (let i = 0; i < firstDay; i++) {
+
+        const empty =
+            document.createElement("div");
+
+        calendar.appendChild(empty);
+
+    }
+
+
+    for (let day = 1; day <= daysInMonth; day++) {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "day";
+
+
+        const dateString =
+            `${year}-${String(month + 1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+
+
+        const today =
+            new Date();
+
+
+        if (
+            day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear()
+        ) {
+
+            div.classList.add("today");
+
+        }
+
+
+        div.innerHTML =
+            `<div class="day-number">${day}</div>`;
+
+
+        const dayTests =
+            tests.filter(test => test.date === dateString);
+
+
+        dayTests.forEach(test => {
+
+            div.innerHTML += `
+
+                <span class="test-dot">
+                    ${escapeHTML(test.subject)}
+                </span>
+
+            `;
+
+        });
+
+
+        calendar.appendChild(div);
+
+    }
+
+}
+
+
+function changeMonth(amount) {
+
+    calendarDate.setMonth(
+        calendarDate.getMonth() + amount
+    );
+
+    renderCalendar();
+
+}
+
+
+/* =====================================================
+                     PROVAS
+===================================================== */
+
+function addTest() {
+
+    const subject =
+        document.getElementById("testSubject")
+            .value.trim();
+
+    const date =
+        document.getElementById("testDate").value;
+
+    const time =
+        document.getElementById("testTime").value;
+
+    const content =
+        document.getElementById("testContent")
+            .value.trim();
+
+    const notes =
+        document.getElementById("testNotes")
+            .value.trim();
+
+
+    if (!subject || !date) {
+
+        alert("Preencha pelo menos a matéria e a data.");
+
+        return;
+
+    }
+
+
+    tests.push({
+
+        id: Date.now(),
+
+        subject,
+
+        date,
+
+        time,
+
+        content,
+
+        notes
+
+    });
+
+
+    tests.sort(
+        (a,b) =>
+            new Date(a.date) -
+            new Date(b.date)
+    );
+
+
+    localStorage.setItem(
+        "mochilaTests",
+        JSON.stringify(tests)
+    );
+
+
+    document.getElementById("testSubject").value = "";
+    document.getElementById("testDate").value = "";
+    document.getElementById("testTime").value = "";
+    document.getElementById("testContent").value = "";
+    document.getElementById("testNotes").value = "";
+
+
+    renderCalendar();
+    renderTests();
+
+}
+
+
+function renderTests() {
+
+    const container =
+        document.getElementById("testsContainer");
+
+    if (!tests.length) {
+
+        container.innerHTML = `
+            <div class="form-card">
+                <p style="font-size:19px;">
+                    ✦ Nenhuma prova cadastrada.
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    tests.forEach(test => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "test-item";
+
+
+        div.innerHTML = `
+
+            <div class="test-info">
+
+                <strong>
+                    ${escapeHTML(test.subject)}
+                </strong>
+
+                <span>
+                    📅 ${formatDate(test.date)}
+                    ${test.time ? " • 🕘 " + test.time : ""}
+                </span>
+
+                ${
+                    test.content
+                    ?
+                    `<span>📚 ${escapeHTML(test.content)}</span>`
+                    :
+                    ""
+                }
+
+                ${
+                    test.notes
+                    ?
+                    `<span>📝 ${escapeHTML(test.notes)}</span>`
+                    :
+                    ""
+                }
+
+            </div>
+
+            <button
+                class="small-btn"
+                onclick="deleteTest(${test.id})"
+            >
+                🗑️ Excluir
+            </button>
+
+        `;
+
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+function deleteTest(id) {
+
+    if (!confirm("Deseja excluir esta prova?")) {
+        return;
+    }
+
+    tests =
+        tests.filter(test => test.id !== id);
+
+    localStorage.setItem(
+        "mochilaTests",
+        JSON.stringify(tests)
+    );
+
+    renderCalendar();
+    renderTests();
+
+}
+
+
+/* =====================================================
+                     ALUNO
+===================================================== */
+
+function loadStudent() {
+
+    document.getElementById("studentName").value =
+        student.name || "";
+
+    document.getElementById("studentBirth").value =
+        student.birth || "";
+
+    document.getElementById("studentSchool").value =
+        student.school || "";
+
+    document.getElementById("studentRegistration").value =
+        student.registration || "";
+
+}
+
+
+function saveStudent() {
+
+    student = {
+
+        name:
+            document.getElementById("studentName")
+                .value.trim(),
+
+        birth:
+            document.getElementById("studentBirth")
+                .value,
+
+        school:
+            document.getElementById("studentSchool")
+                .value.trim(),
+
+        registration:
+            document.getElementById("studentRegistration")
+                .value.trim()
+
+    };
+
+
+    localStorage.setItem(
+        "mochilaStudent",
+        JSON.stringify(student)
+    );
+
+
+    alert("Informações salvas com sucesso! ★");
+
+}
+
+
+/* =====================================================
+                     FUNÇÕES AUXILIARES
+===================================================== */
+
+function formatDate(date) {
+
+    if (!date) {
+        return "Sem data";
+    }
+
+    const parts =
+        date.split("-");
+
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+
+}
+
+
+function escapeHTML(text) {
+
+    if (!text) return "";
+
+    return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+function escapeAttribute(text) {
+
+    return escapeHTML(text);
+
+}
+
+
+/* =====================================================
+                 INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    createSchedule();
+
+    loadStudent();
+
+    renderCalendar();
+
+    renderTests();
+
+});
+
+
+/* FECHAR MODAL CLICANDO FORA */
+
+document.getElementById("activityModal")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+            closeModal();
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
