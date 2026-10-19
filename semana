@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Minha Semana das Crianças | 2026 e 2027</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff5f7;
+            color: #493b45;
+            line-height: 1.8;
+        }
+
+        header {
+            background: #f6cbd7;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        header h1 {
+            color: #713f58;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 17px;
+        }
+
+        nav {
+            background: #fbe3e9;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a, .botao {
+            display: inline-block;
+            text-decoration: none;
+            background: #d98da8;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav a:hover, .botao:hover {
+            background: #b96b89;
+            transform: translateY(-2px);
+        }
+
+        main {
+            max-width: 950px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px #e8cbd4;
+        }
+
+        h2 {
+            color: #b96b89;
+            margin-bottom: 15px;
+        }
+
+        section p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .destaque {
+            background: #fce7ed;
+            border-left: 5px solid #d98da8;
+        }
+
+        .emoji {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .centralizado {
+            text-align: center;
+        }
+
+        .centralizado p {
+            text-align: center;
+        }
+
+        footer {
+            background: #f6cbd7;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            color: #713f58;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 25px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🎈 Semana das Crianças 🎈</h1>
+        <p>Minha experiência em 2026 e meus desejos para 2027</p>
+    </header>
+
+    <nav>
+        <a href="index.html">🏠 Voltar ao INDEX</a>
+        <a href="#experiencia">Minha experiência</a>
+        <a href="#futuro">Meus desejos para 2027</a>
+    </nav>
+
+    <main>
+
+        <section class="destaque">
+            <div class="emoji">💗</div>
+
+            <h2>Uma semana para recordar!</h2>
+
+            <p>
+                A Semana das Crianças é um período que pode ser aproveitado
+                de diferentes maneiras. Nesta página, vou compartilhar como
+                passei esse período em 2026 e o que gostaria de viver
+                no próximo ano.
+            </p>
+        </section>
+
+        <section id="experiencia">
+            <div class="emoji">🌸</div>
+
+            <h2>Como foi minha experiência em 2026?</h2>
+
+            <p>
+                Minha Semana das Crianças de 2026 foi tranquila.
+                Durante esse período, aproveitei para dormir, descansar
+                e arrumar a casa. Não participei de passeios ou atividades
+                especiais, então meus dias foram mais simples e ficaram
+                concentrados no descanso e nas tarefas de casa.
+            </p>
+
+            <p>
+                Apesar de não ter feito nada diferente, pude aproveitar
+                o tempo em casa e descansar um pouco da rotina.
+                Foi assim que passei minha Semana das Crianças neste ano.
+            </p>
+        </section>
+
+        <section id="futuro">
+            <div class="emoji">✨</div>
+
+            <h2>Como desejo que seja em 2027?</h2>
+
+            <p>
+                Para a Semana das Crianças de 2027, gostaria que fosse
+                diferente e mais divertida. Quero ter a oportunidade de
+                fazer passeios, participar de brincadeiras e aproveitar
+                momentos especiais com meus amigos e familiares.
+            </p>
+
+            <p>
+                Também gostaria de sair um pouco da rotina, conhecer
+                lugares novos e viver experiências que ainda não tive.
+                Espero que o próximo ano seja cheio de alegria, diversão
+                e boas lembranças!
+            </p>
+        </section>
+
+        <section class="destaque">
+            <div class="emoji">💭</div>
+
+            <h2>Minha reflexão</h2>
+
+            <p>
+                Nem sempre passamos as datas comemorativas da maneira
+                que imaginamos, e tudo bem. Em 2026, minha semana foi
+                mais tranquila, com descanso e tarefas de casa.
+                Para 2027, espero ter novas oportunidades para me divertir,
+                sair da rotina e guardar lembranças felizes.
+            </p>
+        </section>
+
+        <section class="centralizado">
+            <div class="emoji">💌</div>
+
+            <h2>Obrigada pela visita!</h2>
+
+            <p>
+                Essa foi minha experiência em 2026 e o que espero
+                viver na próxima Semana das Crianças.
+            </p>
+
+            <a class="botao" href="index.html">
+                🏠 Voltar para o INDEX
+            </a>
+
+            <a class="botao" href="semana-das-criancas.html">
+                🌸 Voltar para esta página
+            </a>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Semana das Crianças | 2026 – 2027</p>
+        <p>Feito com carinho 💗</p>
+    </footer>
+
+</body>
+</html>
