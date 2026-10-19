@@ -1,0 +1,29 @@
+
+/* BOTÃO SEMANA DAS CRIANÇAS */
+
+.semana-btn {
+    display: inline-block;
+    background: #4a3729;
+    color: #fefbe8;
+    padding: 13px 25px;
+    border: 2px solid #d8c9b8;
+    border-radius: 30px;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 5px 12px rgba(74, 55, 41, 0.18);
+    transition: 0.3s ease;
+}
+
+.semana-btn:hover {
+    background: #705748;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(74, 55, 41, 0.25);
+}
+
+.semana-container {
+    text-align: center;
+    margin: 25px 0;
+}
