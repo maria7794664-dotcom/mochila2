@@ -85,6 +85,18 @@ body::after {
 
 /* CABEÇALHO */
 
+    /* IMAGEM DO CABEÇALHO */
+
+.mochila-imagem {
+    display: block;
+    width: 180px;
+    max-width: 45%;
+    height: auto;
+    margin: 15px auto;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
 header {
     background: var(--creme-claro);
     border: 2px solid var(--bege);
@@ -710,11 +722,17 @@ footer .stars {
 
 <header>
 
-    <div class="logo">✦ Minha Mochila Escolar ✦</div>
+  <div class="logo">✦ Minha Mochila Escolar ✦</div>
 
-    <div class="subtitle">
-        organização dos seus estudos
-    </div>
+<img
+    src="imagens/ecm.png"
+    alt="Imagem decorativa da Minha Mochila Escolar"
+    class="mochila-imagem"
+>
+
+<div class="subtitle">
+    organização dos seus estudos
+</div>
 
     <div class="decorative-line">
         <span>★</span>
